@@ -29,7 +29,9 @@ public extension SkyResolver {
     }
 
     func resolve<Service>() -> Service {
-        guard contains(Service.self), let service: Service = resolvedService() else {
+        guard contains(Service.self),
+              let service: Service = resolvedService()
+        else {
             fatalError("\(Service.self) has not been registered.")
         }
 
