@@ -2,8 +2,12 @@ import Foundation
 
 private typealias ServiceID = Int
 
+
+/// Dependency resolver container.
 public final class SkyResolver {
 
+
+    /// A singleton object used to operate on the SkyResolver.
     static let shared = SkyResolver()
     private init() {}
 
@@ -13,6 +17,11 @@ public final class SkyResolver {
 
 public extension SkyResolver {
 
+    /// Registeres provided type to be resolved in the future with the constructor closure.
+    /// - Parameters:
+    ///   - override: Whether it should override already registered service of the same type or not
+    ///   - serviceFactory: Service constructor, that is going to be used to initialize a service
+    /// - Returns: Result with either a `success` for successfull registration of the service whithing the resolver or a `failure(SkyRegistrationError)`
     @discardableResult
     func register<Service>(override: Bool = false, _ serviceFactory: @escaping () -> Service) -> Result<Void, SkyRegistrationError> {
         guard override == false else {
@@ -28,6 +37,10 @@ public extension SkyResolver {
         }
     }
 
+
+    /// Makes a lookup through the registered services and returns the one that fits the type of the generic parameter.
+    /// - Returns: Service, that fits the generic type constraint
+    /// - Throws: `SkyResolveError`
     func resolve<Service>() throws -> Service {
         guard contains(Service.self),
               let service: Service = resolvedService()
@@ -38,6 +51,8 @@ public extension SkyResolver {
         return service
     }
 
+
+    /// Removes all registered types. Has completely prestine state afterwards.
     func reset() {
         registeredServices.removeAll()
     }
