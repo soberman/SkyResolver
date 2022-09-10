@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F85921F528CD3C61009551D8 /* SkyResolverErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85921F428CD3C61009551D8 /* SkyResolverErrors.swift */; };
 		F8BD713428CD22C400CF9111 /* SkyResolver.docc in Sources */ = {isa = PBXBuildFile; fileRef = F8BD713328CD22C400CF9111 /* SkyResolver.docc */; };
 		F8BD713A28CD22C400CF9111 /* SkyResolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BD712F28CD22C400CF9111 /* SkyResolver.framework */; };
 		F8BD713F28CD22C400CF9111 /* SkyResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD713E28CD22C400CF9111 /* SkyResolverTests.swift */; };
 		F8BD714028CD22C400CF9111 /* SkyResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = F8BD713228CD22C400CF9111 /* SkyResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8BD714C28CD24D900CF9111 /* SkyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD714B28CD24D900CF9111 /* SkyResolver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +26,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F85921F428CD3C61009551D8 /* SkyResolverErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyResolverErrors.swift; sourceTree = "<group>"; };
 		F8BD712F28CD22C400CF9111 /* SkyResolver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SkyResolver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BD713228CD22C400CF9111 /* SkyResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkyResolver.h; sourceTree = "<group>"; };
 		F8BD713328CD22C400CF9111 /* SkyResolver.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SkyResolver.docc; sourceTree = "<group>"; };
 		F8BD713928CD22C400CF9111 /* SkyResolverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyResolverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BD713E28CD22C400CF9111 /* SkyResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyResolverTests.swift; sourceTree = "<group>"; };
+		F8BD714B28CD24D900CF9111 /* SkyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyResolver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,8 @@
 		F8BD713128CD22C400CF9111 /* SkyResolver */ = {
 			isa = PBXGroup;
 			children = (
+				F8BD714B28CD24D900CF9111 /* SkyResolver.swift */,
+				F85921F428CD3C61009551D8 /* SkyResolverErrors.swift */,
 				F8BD713228CD22C400CF9111 /* SkyResolver.h */,
 				F8BD713328CD22C400CF9111 /* SkyResolver.docc */,
 			);
@@ -195,6 +201,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8BD713428CD22C400CF9111 /* SkyResolver.docc in Sources */,
+				F85921F528CD3C61009551D8 /* SkyResolverErrors.swift in Sources */,
+				F8BD714C28CD24D900CF9111 /* SkyResolver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +404,7 @@
 		F8BD714728CD22C400CF9111 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B7LBN3YR79;
@@ -412,6 +421,7 @@
 		F8BD714828CD22C400CF9111 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B7LBN3YR79;

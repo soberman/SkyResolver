@@ -1,10 +1,3 @@
-//
-//  SkyResolver.h
-//  SkyResolver
-//
-//  Created by Yaroslav Arsenkin on 10.09.22.
-//
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for SkyResolver.
