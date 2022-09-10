@@ -14,7 +14,7 @@ public final class SkyResolver {
 public extension SkyResolver {
 
     @discardableResult
-    func register<Service>(override: Bool = false, _ serviceFactory: @escaping () -> Service) -> Result<Void, SkyResolverRegistrationError> {
+    func register<Service>(override: Bool = false, _ serviceFactory: @escaping () -> Service) -> Result<Void, SkyRegistrationError> {
         guard override == false else {
             registerFactory(serviceFactory)
             return .success(Void())
@@ -28,11 +28,11 @@ public extension SkyResolver {
         }
     }
 
-    func resolve<Service>() -> Service {
+    func resolve<Service>() throws -> Service {
         guard contains(Service.self),
               let service: Service = resolvedService()
         else {
-            fatalError("\(Service.self) has not been registered.")
+            throw SkyResolveError.typeNotRegistered
         }
 
         return service

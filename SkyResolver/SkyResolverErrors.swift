@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SkyResolverRegistrationError: LocalizedError {
+public enum SkyRegistrationError: LocalizedError {
     case typeAlreadyRegistered
 
     public var failureReason: String? {
@@ -16,4 +16,8 @@ public enum SkyResolverRegistrationError: LocalizedError {
             return "user `override` parameter to user the latest object registered OR register conformance to another protocol"
         }
     }
+}
+
+public enum SkyResolveError: LocalizedError {
+    case typeNotRegistered
 }
