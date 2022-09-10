@@ -57,9 +57,9 @@ class SkyResolverTests: XCTestCase {
 
     func testRegisteringWithProtocolCasting() {
         SkyResolver.shared.register { A() as TestSubject }
-        SkyResolver.shared.register { B(a: SkyResolver.shared.resolve()) }
+        SkyResolver.shared.register { B(a: try! SkyResolver.shared.resolve()) }
 
-        let _: B = SkyResolver.shared.resolve()
+        let _: B = try! SkyResolver.shared.resolve()
         XCTAssertTrue(true, "We did not encounter fatal exception and resolved object successfully")
     }
 
