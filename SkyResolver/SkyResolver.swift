@@ -29,14 +29,11 @@ public extension SkyResolver {
     }
 
     func resolve<Service>() -> Service {
-        let identifier = objectIdentifier(for: Service.self)
-        guard let serviceFactory = registeredServices[identifier],
-              let resolvedObject = serviceFactory() as? Service
-        else {
+        guard contains(Service.self), let service: Service = resolvedService() else {
             fatalError("\(Service.self) has not been registered.")
         }
 
-        return resolvedObject
+        return service
     }
 
 }
@@ -63,6 +60,12 @@ private extension SkyResolver {
     func registerFactory<Service>(_ serviceFactory: @escaping () -> Service) {
         let identifier = objectIdentifier(for: Service.self)
         registeredServices[identifier] = serviceFactory
+    }
+
+    func resolvedService<Service>() -> Service? {
+        let identifier = objectIdentifier(for: Service.self)
+        let serviceFactory = registeredServices[identifier]
+        return serviceFactory?() as? Service
     }
 
 }
