@@ -36,6 +36,10 @@ public extension SkyResolver {
         return service
     }
 
+    func reset() {
+        registeredServices.removeAll()
+    }
+
 }
 
 extension SkyResolver {
@@ -43,10 +47,6 @@ extension SkyResolver {
     func contains<Service>(_ service: Service.Type) -> Bool {
         let identifier = objectIdentifier(for: service)
         return registeredServices.contains(where: { $0.key == identifier })
-    }
-
-    func reset() {
-        registeredServices.removeAll()
     }
 
 }
