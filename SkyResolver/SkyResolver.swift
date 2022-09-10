@@ -42,19 +42,15 @@ public extension SkyResolver {
 
 }
 
-extension SkyResolver {
-
-    func contains<Service>(_ service: Service.Type) -> Bool {
-        let identifier = objectIdentifier(for: service)
-        return registeredServices.contains(where: { $0.key == identifier })
-    }
-
-}
-
 private extension SkyResolver {
 
     func objectIdentifier<Service>(for service: Service.Type) -> ServiceID {
         ObjectIdentifier(service).hashValue
+    }
+
+    func contains<Service>(_ service: Service.Type) -> Bool {
+        let identifier = objectIdentifier(for: service)
+        return registeredServices.contains(where: { $0.key == identifier })
     }
 
     func registerFactory<Service>(_ serviceFactory: @escaping () -> Service) {
