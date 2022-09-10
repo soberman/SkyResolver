@@ -1,36 +1,66 @@
-//
-//  SkyResolverTests.swift
-//  SkyResolverTests
-//
-//  Created by Yaroslav Arsenkin on 10.09.22.
-//
-
 import XCTest
 @testable import SkyResolver
 
+protocol TestSubject: AnyObject {}
+class A: TestSubject {}
+class C: TestSubject {
+    let sample = "sample"
+}
+class B {
+    let a: TestSubject
+    init(a: TestSubject) {
+        self.a = a
+    }
+}
+
 class SkyResolverTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func tearDown() {
+        SkyResolver.shared.reset()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testRegisterFails_forConsequentRegistrationOfSameProtocol() {
+        let resultA = SkyResolver.shared.register {
+            A() as TestSubject
         }
+        switch resultA {
+        case .success: XCTAssertTrue(true)
+        case .failure: XCTAssertTrue(false)
+        }
+
+        let resultB = SkyResolver.shared.register {
+            C() as TestSubject
+        }
+        switch resultB {
+        case .success: XCTAssertTrue(false)
+        case .failure: XCTAssertTrue(true)
+        }
+    }
+
+    func testRegisterSucceeds_overridingAlreadyRegisteredProtocol() {
+        let resultA = SkyResolver.shared.register {
+            A() as TestSubject
+        }
+        switch resultA {
+        case .success: XCTAssertTrue(true)
+        case .failure: XCTAssertTrue(false)
+        }
+
+        let resultB = SkyResolver.shared.register(override: true) {
+            C() as TestSubject
+        }
+        switch resultB {
+        case .success: XCTAssertTrue(true)
+        case .failure: XCTAssertTrue(false)
+        }
+    }
+
+    func testRegisteringWithProtocolCasting() {
+        SkyResolver.shared.register { A() as TestSubject }
+        SkyResolver.shared.register { B(a: SkyResolver.shared.resolve()) }
+
+        let _: B = SkyResolver.shared.resolve()
+        XCTAssertTrue(true, "We did not encounter fatal exception and resolved object successfully")
     }
 
 }
