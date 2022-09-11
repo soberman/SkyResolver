@@ -11,6 +11,7 @@ public final class SkyResolver {
     static let shared = SkyResolver()
     private init() {}
 
+    private let lock = NSRecursiveLock()
     private var registeredServices = [ServiceID : () -> Any]()
 
 }
@@ -24,6 +25,9 @@ public extension SkyResolver {
     /// - Returns: Result with either a `success` for successfull registration of the service whithing the resolver or a `failure(SkyRegistrationError)`
     @discardableResult
     func register<Service>(override: Bool = false, _ serviceFactory: @escaping () -> Service) -> Result<Void, SkyRegistrationError> {
+        lock.lock()
+        defer { lock.unlock() }
+
         guard override == false else {
             registerFactory(serviceFactory)
             return .success(Void())
@@ -42,6 +46,9 @@ public extension SkyResolver {
     /// - Returns: Service, that fits the generic type constraint
     /// - Throws: `SkyResolveError`
     func resolve<Service>() throws -> Service {
+        lock.lock()
+        defer { lock.unlock() }
+        
         guard contains(Service.self),
               let service: Service = resolvedService()
         else {
