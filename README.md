@@ -40,4 +40,4 @@ SkyResolver does not support circular initializer dependency resolution. Upon ha
 SkyContainer.shared.register { Egg(chicken: try! SkyContainer.shared.resolve()) }
 SkyContainer.shared.register { Chicken(egg: try! SkyContainer.shared.resolve()) }
 ```
-expect the resolver to throw an error. try structuring your dependencies with another pattern.
+expect the resolver to throw an error. Try structuring your dependencies with another pattern.
