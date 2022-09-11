@@ -4,10 +4,10 @@ private typealias ServiceID = Int
 
 
 /// Dependency resolver container. Use this class to register your dependencies upfront before instantiation of your classes that you are dependent on.
-public final class SkyResolver {
+public final class SkyContainer {
 
     /// A singleton object used to operate on the SkyResolver.
-    static let shared = SkyResolver()
+    static let shared = SkyContainer()
     private init() {}
 
     private let lock = NSRecursiveLock()
@@ -16,7 +16,7 @@ public final class SkyResolver {
 
 }
 
-public extension SkyResolver {
+public extension SkyContainer {
 
     /// Registeres provided type to be resolved in the future with the constructor closure.
     /// - Parameters:
@@ -66,7 +66,7 @@ public extension SkyResolver {
 
 }
 
-private extension SkyResolver {
+private extension SkyContainer {
 
     func objectIdentifier<Service>(for service: Service.Type) -> ServiceID {
         ObjectIdentifier(service).hashValue
