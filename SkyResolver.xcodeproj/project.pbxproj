@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F85921F528CD3C61009551D8 /* SkyResolverErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85921F428CD3C61009551D8 /* SkyResolverErrors.swift */; };
+		F85921F528CD3C61009551D8 /* SkyContainerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85921F428CD3C61009551D8 /* SkyContainerErrors.swift */; };
+		F859224F28CE2259009551D8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F859224E28CE2259009551D8 /* README.md */; };
 		F8BD713A28CD22C400CF9111 /* SkyResolver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BD712F28CD22C400CF9111 /* SkyResolver.framework */; };
 		F8BD713F28CD22C400CF9111 /* SkyResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD713E28CD22C400CF9111 /* SkyResolverTests.swift */; };
 		F8BD714028CD22C400CF9111 /* SkyResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = F8BD713228CD22C400CF9111 /* SkyResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8BD714C28CD24D900CF9111 /* SkyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD714B28CD24D900CF9111 /* SkyResolver.swift */; };
+		F8BD714C28CD24D900CF9111 /* SkyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BD714B28CD24D900CF9111 /* SkyContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,12 +26,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F85921F428CD3C61009551D8 /* SkyResolverErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyResolverErrors.swift; sourceTree = "<group>"; };
+		F85921F428CD3C61009551D8 /* SkyContainerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyContainerErrors.swift; sourceTree = "<group>"; };
+		F859224E28CE2259009551D8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F8BD712F28CD22C400CF9111 /* SkyResolver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SkyResolver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BD713228CD22C400CF9111 /* SkyResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkyResolver.h; sourceTree = "<group>"; };
 		F8BD713928CD22C400CF9111 /* SkyResolverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyResolverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BD713E28CD22C400CF9111 /* SkyResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyResolverTests.swift; sourceTree = "<group>"; };
-		F8BD714B28CD24D900CF9111 /* SkyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyResolver.swift; sourceTree = "<group>"; };
+		F8BD714B28CD24D900CF9111 /* SkyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +57,8 @@
 		F859223728CDEF19009551D8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				F8BD714B28CD24D900CF9111 /* SkyResolver.swift */,
-				F85921F428CD3C61009551D8 /* SkyResolverErrors.swift */,
+				F8BD714B28CD24D900CF9111 /* SkyContainer.swift */,
+				F85921F428CD3C61009551D8 /* SkyContainerErrors.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -64,6 +66,7 @@
 		F8BD712528CD22C400CF9111 = {
 			isa = PBXGroup;
 			children = (
+				F859224E28CE2259009551D8 /* README.md */,
 				F8BD713128CD22C400CF9111 /* SkyResolver */,
 				F8BD713D28CD22C400CF9111 /* SkyResolverTests */,
 				F8BD713028CD22C400CF9111 /* Products */,
@@ -188,6 +191,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F859224F28CE2259009551D8 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,8 +209,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F85921F528CD3C61009551D8 /* SkyResolverErrors.swift in Sources */,
-				F8BD714C28CD24D900CF9111 /* SkyResolver.swift in Sources */,
+				F85921F528CD3C61009551D8 /* SkyContainerErrors.swift in Sources */,
+				F8BD714C28CD24D900CF9111 /* SkyContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
