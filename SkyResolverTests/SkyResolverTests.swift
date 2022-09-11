@@ -77,16 +77,16 @@ class B {
     }
 }
 
-class D {
-    let e: E
-    init(e: E) {
-        self.e = e
+class Egg {
+    let chicken: Chicken
+    init(chicken: Chicken) {
+        self.chicken = chicken
     }
 }
-class E {
-    let d: D
-    init(d: D) {
-        self.d = d
+class Chicken {
+    let egg: Egg
+    init(egg: Egg) {
+        self.egg = egg
     }
 }
 
