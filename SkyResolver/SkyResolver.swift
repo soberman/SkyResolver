@@ -53,7 +53,7 @@ public extension SkyResolver {
             lock.unlock()
         }
 
-        try tryToIncrementServiceResolveCounter(for: serviceID)
+        try incrementServiceResolveCounter(for: serviceID)
         let service = try resolveService(Service.self)
 
         return service
@@ -96,7 +96,7 @@ private extension SkyResolver {
         return serviceFactory?() as? Service
     }
 
-    func tryToIncrementServiceResolveCounter(for serviceID: ServiceID) throws {
+    func incrementServiceResolveCounter(for serviceID: ServiceID) throws {
         guard serviceResolveAttempts[serviceID] == nil else {
             throw SkyResolveError.circularDependency
         }
