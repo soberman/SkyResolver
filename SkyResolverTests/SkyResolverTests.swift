@@ -60,6 +60,48 @@ class SkyResolverTests: XCTestCase {
         XCTAssertTrue(true, "We did not encounter fatal exception and resolved object successfully")
     }
 
+    func testCircularDependency() {
+        var didTriggerCircularDependencyError = false
+
+        SkyResolver.shared.register { Egg(chicken: try! SkyResolver.shared.resolve()) }
+        SkyResolver.shared.register { () -> Chicken in
+            do {
+                return Chicken(egg: try SkyResolver.shared.resolve())
+            } catch let error {
+                if error is SkyResolveError {
+                    didTriggerCircularDependencyError = true
+                }
+                return Chicken(egg: Egg())
+            }
+        }
+
+        let _: Egg = try! SkyResolver.shared.resolve()
+        XCTAssertTrue(didTriggerCircularDependencyError)
+    }
+
+    func testCircularDependencyCheckResetsAfterBeingTrigerred() {
+        var didTriggerCircularDependencyError = false
+
+        SkyResolver.shared.register { Egg(chicken: try! SkyResolver.shared.resolve()) }
+        SkyResolver.shared.register { () -> Chicken in
+            do {
+                return Chicken(egg: try SkyResolver.shared.resolve())
+            } catch let error {
+                if error is SkyResolveError {
+                    didTriggerCircularDependencyError = true
+                }
+                return Chicken(egg: Egg())
+            }
+        }
+
+        let _: Egg = try! SkyResolver.shared.resolve()
+        XCTAssertTrue(didTriggerCircularDependencyError)
+
+        didTriggerCircularDependencyError = false
+        let _: Egg = try! SkyResolver.shared.resolve()
+        XCTAssertTrue(didTriggerCircularDependencyError)
+    }
+
 }
 
 protocol TestSubject: AnyObject {}
@@ -82,11 +124,17 @@ class Egg {
     init(chicken: Chicken) {
         self.chicken = chicken
     }
+    convenience init() {
+        self.init(chicken: Chicken())
+    }
 }
 class Chicken {
-    let egg: Egg
-    init(egg: Egg) {
+    let egg: Egg!
+    init(egg: Egg?) {
         self.egg = egg
+    }
+    convenience init() {
+        self.init(egg: nil)
     }
 }
 

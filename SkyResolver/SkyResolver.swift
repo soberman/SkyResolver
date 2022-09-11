@@ -12,6 +12,7 @@ public final class SkyResolver {
 
     private let lock = NSRecursiveLock()
     private var registeredServices = [ServiceID : () -> Any]()
+    private var serviceResolveAttempts = [ServiceID : Int]()
 
 }
 
@@ -46,17 +47,17 @@ public extension SkyResolver {
     /// - Throws: `SkyResolveError`
     func resolve<Service>() throws -> Service {
         lock.lock()
-        defer { lock.unlock() }
-        
-        guard contains(Service.self),
-              let service: Service = resolvedService()
-        else {
-            throw SkyResolveError.typeNotRegistered
+        let serviceID = objectIdentifier(for: Service.self)
+        defer {
+            resetIncrementCounter(for: serviceID)
+            lock.unlock()
         }
+
+        try tryToIncrementServiceResolveCounter(for: serviceID)
+        let service = try resolveService(Service.self)
 
         return service
     }
-
 
     /// Removes all registered types. Has completely prestine state afterwards.
     func reset() {
@@ -81,10 +82,30 @@ private extension SkyResolver {
         registeredServices[identifier] = serviceFactory
     }
 
-    func resolvedService<Service>() -> Service? {
+    func resolveService<Service>(_ service: Service.Type) throws -> Service {
+        guard contains(service), let service: Service = instantiatedService() else {
+            throw SkyResolveError.typeNotRegistered
+        }
+
+        return service
+    }
+
+    func instantiatedService<Service>() -> Service? {
         let identifier = objectIdentifier(for: Service.self)
         let serviceFactory = registeredServices[identifier]
         return serviceFactory?() as? Service
+    }
+
+    func tryToIncrementServiceResolveCounter(for serviceID: ServiceID) throws {
+        guard serviceResolveAttempts[serviceID] == nil else {
+            throw SkyResolveError.circularDependency
+        }
+
+        serviceResolveAttempts[serviceID] = 1
+    }
+
+    func resetIncrementCounter(for serviceID: ServiceID) {
+        serviceResolveAttempts[serviceID] = nil
     }
 
 }
