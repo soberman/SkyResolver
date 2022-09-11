@@ -6,7 +6,6 @@ private typealias ServiceID = Int
 /// Dependency resolver container.
 public final class SkyResolver {
 
-
     /// A singleton object used to operate on the SkyResolver.
     static let shared = SkyResolver()
     private init() {}
