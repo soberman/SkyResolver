@@ -8,6 +8,7 @@ public final class SkyContainer {
 
     /// A singleton object used to operate on the SkyResolver.
     public static let shared = SkyContainer()
+    public init() {}
 
     private let lock = NSRecursiveLock()
     private var registeredServices = [ServiceID : () -> Any]()
