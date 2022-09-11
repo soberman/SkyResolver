@@ -4,11 +4,11 @@ import XCTest
 class SkyResolverTests: XCTestCase {
 
     override func tearDown() {
-        SkyResolver.shared.reset()
+        SkyContainer.shared.reset()
     }
 
     func testRegisterFails_forConsequentRegistrationOfSameProtocol() {
-        let resultA = SkyResolver.shared.register {
+        let resultA = SkyContainer.shared.register {
             A() as TestSubject
         }
         switch resultA {
@@ -16,7 +16,7 @@ class SkyResolverTests: XCTestCase {
         case .failure: XCTAssertTrue(false)
         }
 
-        let resultB = SkyResolver.shared.register {
+        let resultB = SkyContainer.shared.register {
             C() as TestSubject
         }
         switch resultB {
@@ -26,7 +26,7 @@ class SkyResolverTests: XCTestCase {
     }
 
     func testRegisterSucceeds_overridingAlreadyRegisteredProtocol() {
-        let resultA = SkyResolver.shared.register {
+        let resultA = SkyContainer.shared.register {
             A() as TestSubject
         }
         switch resultA {
@@ -34,7 +34,7 @@ class SkyResolverTests: XCTestCase {
         case .failure: XCTAssertTrue(false)
         }
 
-        let resultB = SkyResolver.shared.register(override: true) {
+        let resultB = SkyContainer.shared.register(override: true) {
             C() as TestSubject
         }
         switch resultB {
@@ -44,29 +44,29 @@ class SkyResolverTests: XCTestCase {
     }
 
     func testRegisteringWithProtocolCasting() {
-        SkyResolver.shared.register { A() as TestSubject }
-        SkyResolver.shared.register { B(a: try! SkyResolver.shared.resolve()) }
+        SkyContainer.shared.register { A() as TestSubject }
+        SkyContainer.shared.register { B(a: try! SkyContainer.shared.resolve()) }
 
-        let _: B = try! SkyResolver.shared.resolve()
+        let _: B = try! SkyContainer.shared.resolve()
         XCTAssertTrue(true, "We did not encounter fatal exception and resolved object successfully")
     }
 
     func testRegisterAndResolveOfComplexDependantObjects() {
-        SkyResolver.shared.register { Worker() as Workerhaving }
-        SkyResolver.shared.register { Manager(worker: try! SkyResolver.shared.resolve()) as ManagerHaving }
-        SkyResolver.shared.register { Director(manager: try! SkyResolver.shared.resolve()) as DirectorHaving }
+        SkyContainer.shared.register { Worker() as Workerhaving }
+        SkyContainer.shared.register { Manager(worker: try! SkyContainer.shared.resolve()) as ManagerHaving }
+        SkyContainer.shared.register { Director(manager: try! SkyContainer.shared.resolve()) as DirectorHaving }
 
-        let _: DirectorHaving = try! SkyResolver.shared.resolve()
+        let _: DirectorHaving = try! SkyContainer.shared.resolve()
         XCTAssertTrue(true, "We did not encounter fatal exception and resolved object successfully")
     }
 
     func testCircularDependency() {
         var didTriggerCircularDependencyError = false
 
-        SkyResolver.shared.register { Egg(chicken: try! SkyResolver.shared.resolve()) }
-        SkyResolver.shared.register { () -> Chicken in
+        SkyContainer.shared.register { Egg(chicken: try! SkyContainer.shared.resolve()) }
+        SkyContainer.shared.register { () -> Chicken in
             do {
-                return Chicken(egg: try SkyResolver.shared.resolve())
+                return Chicken(egg: try SkyContainer.shared.resolve())
             } catch let error {
                 if error is SkyResolveError {
                     didTriggerCircularDependencyError = true
@@ -75,17 +75,17 @@ class SkyResolverTests: XCTestCase {
             }
         }
 
-        let _: Egg = try! SkyResolver.shared.resolve()
+        let _: Egg = try! SkyContainer.shared.resolve()
         XCTAssertTrue(didTriggerCircularDependencyError)
     }
 
     func testCircularDependencyCheckResetsAfterBeingTrigerred() {
         var didTriggerCircularDependencyError = false
 
-        SkyResolver.shared.register { Egg(chicken: try! SkyResolver.shared.resolve()) }
-        SkyResolver.shared.register { () -> Chicken in
+        SkyContainer.shared.register { Egg(chicken: try! SkyContainer.shared.resolve()) }
+        SkyContainer.shared.register { () -> Chicken in
             do {
-                return Chicken(egg: try SkyResolver.shared.resolve())
+                return Chicken(egg: try SkyContainer.shared.resolve())
             } catch let error {
                 if error is SkyResolveError {
                     didTriggerCircularDependencyError = true
@@ -94,11 +94,11 @@ class SkyResolverTests: XCTestCase {
             }
         }
 
-        let _: Egg = try! SkyResolver.shared.resolve()
+        let _: Egg = try! SkyContainer.shared.resolve()
         XCTAssertTrue(didTriggerCircularDependencyError)
 
         didTriggerCircularDependencyError = false
-        let _: Egg = try! SkyResolver.shared.resolve()
+        let _: Egg = try! SkyContainer.shared.resolve()
         XCTAssertTrue(didTriggerCircularDependencyError)
     }
 
