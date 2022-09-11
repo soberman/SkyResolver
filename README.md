@@ -10,8 +10,8 @@ SkyContainer.shared.register { A() as TestSubject }
 Be aware that subsequent registration of the same type would lead to an error as a return value. If you wish to overwrite already registered types use the `override` parameter on the `register` method:
 ``` swift
 SkyContainer.shared.register(override: true) {
-      B() as TestSubject
-    }
+    B() as TestSubject
+}
 ```
 
 `register` method returns a `Result<Void, SkyRegistrationError>`, which you can check for the failure of the particular type registration, if any.
