@@ -3,7 +3,7 @@ import Foundation
 private typealias ServiceID = Int
 
 
-/// Dependency resolver container.
+/// Dependency resolver container. Use this class to register your dependencies upfront before instantiation of your classes that you are dependent on.
 public final class SkyResolver {
 
     /// A singleton object used to operate on the SkyResolver.
