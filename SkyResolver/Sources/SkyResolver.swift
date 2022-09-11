@@ -7,8 +7,7 @@ private typealias ServiceID = Int
 public final class SkyContainer {
 
     /// A singleton object used to operate on the SkyResolver.
-    static let shared = SkyContainer()
-    private init() {}
+    public static let shared = SkyContainer()
 
     private let lock = NSRecursiveLock()
     private var registeredServices = [ServiceID : () -> Any]()
