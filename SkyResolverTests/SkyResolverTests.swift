@@ -68,7 +68,7 @@ class SkyResolverTests: XCTestCase {
             do {
                 return Chicken(egg: try SkyContainer.shared.resolve())
             } catch let error {
-                if error is SkyResolveError {
+                if let skyError = error as? SkyResolveError, skyError == .circularDependency {
                     didTriggerCircularDependencyError = true
                 }
                 return Chicken(egg: Egg())
